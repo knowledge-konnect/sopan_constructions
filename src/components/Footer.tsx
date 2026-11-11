@@ -4,13 +4,15 @@ import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-white mt-24">
+    <footer className="bg-primary text-white">
       <div className="container-x py-16 md:py-20 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <img
-            src="/sopan-logo-footer.svg"
-            alt="Sopan Constructions"
-            className="block h-12 w-auto md:h-14 lg:h-16 object-contain"
+            src="/sopan-logo-footer.png"
+            alt="SOPAN Constructions and Infra Developers"
+            width={800}
+            height={303}
+            className="block h-14 w-auto md:h-16 lg:h-20 object-contain"
           />
           <p className="mt-5 text-[15px] text-white/75 leading-relaxed max-w-xs">
             Residential construction and design solutions with clear communication, practical planning and quality workmanship.

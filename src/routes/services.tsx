@@ -179,7 +179,7 @@ function Services() {
                   <ul className="mt-3 space-y-2">
                     {s.benefits.map((b) => (
                       <li key={b} className="flex gap-2 text-sm text-foreground/85">
-                        <Check className="h-4 w-4 text-gold mt-0.5 shrink-0" /> {b}
+                        <Check className="h-4 w-4 text-gold-text mt-0.5 shrink-0" /> {b}
                       </li>
                     ))}
                   </ul>
@@ -227,7 +227,7 @@ function Services() {
                 <ul className="mt-4 space-y-1.5">
                   {sub.points.map((point) => (
                     <li key={point} className="flex gap-2 items-start text-sm text-foreground/85">
-                      <Check className="h-4 w-4 text-gold mt-0.5 shrink-0" />
+                      <Check className="h-4 w-4 text-gold-text mt-0.5 shrink-0" />
                       {point}
                     </li>
                   ))}

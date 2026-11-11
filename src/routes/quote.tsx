@@ -65,7 +65,7 @@ function Quote() {
 
             <div className="card-base p-6">
               <h4 className="font-display font-semibold text-primary flex items-center gap-2">
-                <Clock className="h-5 w-5 text-gold" /> Working Hours
+                <Clock className="h-5 w-5 text-gold-text" /> Working Hours
               </h4>
               <dl className="mt-3 text-sm text-muted-foreground space-y-1.5">
                 <div className="flex justify-between"><dt>Monday – Saturday</dt><dd className="text-foreground">9:00 AM – 7:00 PM</dd></div>

@@ -1,5 +1,4 @@
 import hero from "@/assets/hero-construction.jpg";
-import { CallbackBar } from "@/components/CallbackBar";
 import { QuoteForm } from "@/components/QuoteForm";
 import { SiteShell } from "@/components/SiteShell";
 import {
@@ -14,16 +13,17 @@ import { site, waHref } from "@/lib/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Award,
+  Layers,
   Building2,
   Calendar,
-  Clock,
   Hammer,
   HardHat,
   HelpCircle,
   Home,
   MapPin,
   MessageCircle,
+  MessageSquare,
+  PencilRuler,
   PaintBucket,
   Ruler,
   ShieldCheck,
@@ -37,10 +37,10 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: `${site.legalName} | Residential Construction & Design` },
-      { name: "description", content: "SOPAN Constructions and Infra Developers delivers residential construction, apartment construction, planning & design, and renovation services." },
-      { property: "og:title", content: `${site.legalName} | Residential Construction & Design` },
-      { property: "og:description", content: "Residential construction, apartment construction, planning & design, and renovation solutions designed for lasting homes." },
+      { title: `${site.legalName} | Residential Construction in Visakhapatnam` },
+      { name: "description", content: "SOPAN Constructions and Infra Developers delivers residential construction, apartment construction, planning & design, and renovation services in Visakhapatnam and nearby areas." },
+      { property: "og:title", content: `${site.legalName} | Residential Construction in Visakhapatnam` },
+      { property: "og:description", content: "Residential construction, apartment construction, planning & design and renovation in Visakhapatnam." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "https://sopanconstructions.in/" },
@@ -52,9 +52,9 @@ export const Route = createFileRoute("/")({
 
 const features = [
   { icon: Wallet, title: "Clear estimates", desc: "We discuss the project scope and provide an itemised estimate covering the expected requirements and costs." },
-  { icon: Award, title: "Material planning", desc: "Project discussions include practical material recommendations and finish considerations for the proposed work." },
+  { icon: Layers, title: "Material planning", desc: "Project discussions include practical material recommendations and finish considerations for the proposed work." },
   { icon: HardHat, title: "Site-focused execution", desc: "The work is planned around the site conditions, structural requirements and practical build sequence." },
-  { icon: Clock, title: "Straightforward communication", desc: "We keep the process clear and easy to follow, with regular updates as the work progresses." },
+  { icon: MessageSquare, title: "Straightforward communication", desc: "We keep the process clear and easy to follow, with regular updates as the work progresses." },
   { icon: ShieldCheck, title: "Practical project approach", desc: "We focus on realistic planning, organised execution and a quality-conscious finish for each home or apartment project." },
   { icon: Users, title: "Responsive support", desc: "Our team stays engaged from first discussion through final walkthrough and handover planning." },
 ];
@@ -62,10 +62,10 @@ const features = [
 
 
 const services = [
-  { icon: Home, title: "Residential Construction", desc: "Independent houses and villas built to approved drawings with supervised civil work and practical detailing." },
-  { icon: Building2, title: "Apartment Construction", desc: "Multi-storey residential developments planned for structure, services and long-term practicality." },
-  { icon: Hammer, title: "Planning & Design", desc: "Layout planning, design guidance, and technical detailing that supports a functional, well-considered home." },
-  { icon: Hammer, title: "Renovation & Remodeling", desc: "Upgrades, structural repairs and layout improvements to refresh and modernise existing homes." },
+  { id: "residential", icon: Home, title: "Residential Construction", desc: "Independent houses and villas built to approved drawings with supervised civil work and practical detailing." },
+  { id: "apartment", icon: Building2, title: "Apartment Construction", desc: "Multi-storey residential developments planned for structure, services and long-term practicality." },
+  { id: "planning-design", icon: PencilRuler, title: "Planning & Design", desc: "Layout planning, design guidance, and technical detailing that supports a functional, well-considered home." },
+  { id: "renovation", icon: Hammer, title: "Renovation & Remodeling", desc: "Upgrades, structural repairs and layout improvements to refresh and modernise existing homes." },
 ];
 
 function Home_() {
@@ -85,7 +85,7 @@ function Home_() {
 
         <div className="container-x relative py-20 sm:py-32 lg:py-40 text-white">
           <span className="eyebrow">
-            <MapPin className="h-3.5 w-3.5" /> Residential construction and design support
+            <MapPin className="h-3.5 w-3.5" /> Visakhapatnam · Residential construction &amp; design
           </span>
           <h1 className="heading-xl mt-5 max-w-3xl text-white fade-up">
             Your Dream Home. Our Commitment. Quality in Every Step.
@@ -152,25 +152,26 @@ function Home_() {
               <span className="eyebrow">Our Services</span>
               <h2 className="heading-lg mt-2 text-primary">Construction services we offer</h2>
             </div>
-            <Link to="/services" className="text-sm font-semibold text-primary hover:text-gold inline-flex items-center gap-1">
+            <Link to="/services" className="text-sm font-semibold text-primary hover:text-gold-text inline-flex items-center gap-1">
               View all services <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {services.map((s) => (
               <Link
                 to="/services"
+                hash={s.id}
                 key={s.title}
                 className="card-base group flex h-full flex-col p-6 sm:p-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
               >
-                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gold/15 text-gold transition-colors duration-300 group-hover:bg-gold group-hover:text-primary">
+                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gold/15 text-gold-text transition-colors duration-300 group-hover:bg-gold group-hover:text-primary">
                   <s.icon className="h-6 w-6" />
                 </div>
-                <h3 className="mt-5 font-display text-lg font-semibold text-primary group-hover:text-gold transition-colors">
+                <h3 className="mt-5 font-display text-lg font-semibold text-primary group-hover:text-gold-text transition-colors">
                   {s.title}
                 </h3>
                 <p className="mt-2 flex-1 text-base text-muted-foreground leading-relaxed">{s.desc}</p>
-                <span className="mt-5 inline-flex items-center text-xs font-semibold text-primary group-hover:text-gold transition-colors">
+                <span className="mt-5 inline-flex items-center text-xs font-semibold text-primary group-hover:text-gold-text transition-colors">
                   Learn more <ArrowRight className="h-3.5 w-3.5 ml-1 transition-transform group-hover:translate-x-0.5" />
                 </span>
               </Link>
@@ -187,8 +188,8 @@ function Home_() {
             <span className="eyebrow">How We Work</span>
             <h2 className="heading-lg mt-2 text-primary">A simple five-step process</h2>
             <p className="mt-3 text-base font-semibold text-primary/80">
-              Discuss <span className="text-gold">→</span> Site Visit <span className="text-gold">→</span> Estimate{" "}
-              <span className="text-gold">→</span> Execute <span className="text-gold">→</span> Handover
+              Discuss <span className="text-gold-text">→</span> Site Visit <span className="text-gold-text">→</span> Estimate{" "}
+              <span className="text-gold-text">→</span> Execute <span className="text-gold-text">→</span> Handover
             </p>
             <p className="mt-2 text-base text-muted-foreground leading-relaxed">
               From the first conversation to handover, you always know what happens next.
@@ -224,7 +225,7 @@ function Home_() {
 
 
       {/* ABOUT */}
-      <section className="section-y bg-surface">
+      <section className="section-y">
         <div className="container-x grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           <div>
             <span className="eyebrow">About Us</span>
@@ -243,7 +244,7 @@ function Home_() {
                 "Responsive project communication",
               ].map((i) => (
                 <div key={i} className="flex items-center gap-2.5 rounded-xl border border-border bg-background px-4 py-3 text-[15px] font-medium text-foreground/85">
-                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gold/20 text-gold">
+                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gold/20 text-gold-text">
                     <ShieldCheck className="h-3 w-3" />
                   </span>
                   {i}
@@ -264,7 +265,7 @@ function Home_() {
           <div className="grid grid-cols-2 gap-4">
             {stats.map((st) => (
               <div key={st.label} className="card-base p-6 sm:p-7 text-center">
-                <div className="font-display text-3xl font-bold text-gold">{st.value}</div>
+                <div className="font-display text-3xl font-bold text-gold-text">{st.value}</div>
                 <div className="mt-2 text-sm font-medium uppercase tracking-wider text-muted-foreground leading-tight">
                   {st.label}
                 </div>
@@ -275,7 +276,7 @@ function Home_() {
       </section>
 
       {/* FEATURED PROJECTS */}
-      <section className="section-y">
+      <section className="section-y bg-surface">
         <div className="container-x">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="max-w-2xl">
@@ -286,7 +287,7 @@ function Home_() {
               </p>
             </div>
 
-            <Link to="/projects" className="text-sm font-semibold text-primary hover:text-gold inline-flex items-center gap-1">
+            <Link to="/projects" className="text-sm font-semibold text-primary hover:text-gold-text inline-flex items-center gap-1">
               View all projects <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -310,10 +311,10 @@ function Home_() {
                 </div>
                 <div className="p-5 sm:p-6">
                   <div className="flex items-center justify-between gap-3 text-[11px] font-semibold tracking-wider uppercase">
-                    <span className="text-gold truncate">{p.type}</span>
+                    <span className="text-gold-text truncate">{p.type}</span>
                     <span className="text-primary shrink-0">{p.status}</span>
                   </div>
-                  <h3 className="mt-2 font-display text-lg font-semibold text-primary group-hover:text-gold transition-colors">
+                  <h3 className="mt-2 font-display text-lg font-semibold text-primary group-hover:text-gold-text transition-colors">
                     {p.name}
                   </h3>
                   <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1.5 text-[15px] text-muted-foreground">
@@ -394,7 +395,7 @@ function Home_() {
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, i) => (
               <AccordionItem key={i} value={`faq-${i}`} className="border-b border-border">
-                <AccordionTrigger className="text-left font-display text-[17px] font-semibold text-primary hover:text-gold hover:no-underline py-5">
+                <AccordionTrigger className="text-left font-display text-[17px] font-semibold text-primary hover:text-gold-text hover:no-underline py-5">
                   {f.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-base text-muted-foreground leading-relaxed pb-5">
@@ -419,7 +420,7 @@ function Home_() {
             <ul className="mt-6 space-y-3 text-base">
               {["No-obligation estimate", "Site visit on request", "Itemised, rate-wise pricing"].map((i) => (
                 <li key={i} className="flex gap-2 items-center text-foreground/85">
-                  <span className="grid h-5 w-5 place-items-center rounded-full bg-gold/20 text-gold">
+                  <span className="grid h-5 w-5 place-items-center rounded-full bg-gold/20 text-gold-text">
                     <PaintBucket className="h-3 w-3" />
                   </span>
                   {i}
@@ -444,7 +445,6 @@ function Home_() {
         </div>
       </section>
 
-      <CallbackBar />
     </SiteShell>
   );
 }

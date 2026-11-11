@@ -34,6 +34,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-gold: var(--gold);
+  --color-gold-text: var(--gold-text);
   --color-gold-foreground: var(--gold-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -69,6 +70,8 @@
   --gold: oklch(0.755 0.135 79);
   /* #D4A017 */
   --gold-foreground: oklch(0.205 0.073 263);
+  /* Darker gold for text/icons on light backgrounds (>= 5:1 on white). Use --gold on navy. */
+  --gold-text: oklch(0.52 0.11 79);
 
   --secondary: oklch(0.962 0.012 247);
   --secondary-foreground: oklch(0.252 0.078 263);
@@ -91,7 +94,7 @@
   --input: oklch(0.928 0.010 255);
   --ring: oklch(0.252 0.078 263);
 
-  --whatsapp: oklch(0.7 0.17 145);
+  --whatsapp: oklch(0.55 0.15 150);
 }
 
 .dark {
@@ -221,7 +224,12 @@
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-gold);
+  color: var(--color-gold-text);
+
+  .bg-primary &,
+  .text-white & {
+    color: var(--color-gold);
+  }
 }
 
 @utility heading-xl {

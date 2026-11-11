@@ -15,6 +15,7 @@ export const Route = createFileRoute("/gallery")({
   },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex, nofollow" }, // hidden for now — remove when Gallery goes live
       { title: "Gallery | SOPAN Constructions" },
       { name: "description", content: "Residential construction and design gallery featuring homes, apartments and renovation inspiration." },
       { property: "og:title", content: "Gallery | SOPAN Constructions" },

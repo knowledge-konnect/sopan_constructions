@@ -21,7 +21,7 @@ export const navigationItems = [
   { label: "About", to: "/about", sectionId: "about" },
   { label: "Services", to: "/services", sectionId: "services" },
   { label: "Projects", to: "/projects", sectionId: "projects" },
-  { label: "Why Us", to: "/#why-us", sectionId: "why-us" },
+  { label: "Why Us", to: "/", hash: "why-us", sectionId: "why-us" },
   { label: "Contact", to: "/contact", sectionId: "contact" },
 ] as const;
 
