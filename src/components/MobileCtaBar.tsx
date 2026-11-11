@@ -21,7 +21,7 @@ export function MobileCtaBar() {
         </a>
         <Link to="/quote" className="flex flex-col items-center gap-1 py-3 bg-gold text-primary">
           <FileText className="h-5 w-5" />
-          <span className="text-[10px] font-bold tracking-wide leading-tight text-center">Get a Free Quote</span>
+          <span className="text-[11px] font-bold tracking-wide">Quote</span>
         </Link>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import { CallbackBar } from "@/components/CallbackBar";
 import { QuoteForm } from "@/components/QuoteForm";
 import { SiteShell } from "@/components/SiteShell";
 import { mailHref, phoneHref, site, waHref } from "@/lib/site";
@@ -21,6 +20,7 @@ export const Route = createFileRoute("/contact")({
 
 const fullAddress = `${site.address.line1}, ${site.address.line2}`;
 const mapsQuery = encodeURIComponent(fullAddress);
+const mapsDirections = `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
 const mapsEmbed = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
 
 function Contact() {
@@ -45,6 +45,9 @@ function Contact() {
                 <div>
                   <h3 className="font-display font-semibold text-primary">Office Address</h3>
                   <p className="mt-1 text-sm text-muted-foreground">{fullAddress}</p>
+                  <a href={mapsDirections} target="_blank" rel="noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-gold-text">
+                    Get directions →
+                  </a>
                 </div>
               </div>
             </div>
@@ -55,7 +58,7 @@ function Contact() {
                 </span>
                 <div>
                   <h3 className="font-display font-semibold text-primary">Phone</h3>
-                  <a href={phoneHref} className="mt-1 text-sm text-muted-foreground hover:text-primary block">{site.phone}</a>
+                  <a href={phoneHref} className="mt-1 block text-base font-semibold text-primary hover:text-gold-text">{site.phone}</a>
                 </div>
               </div>
             </div>
@@ -79,7 +82,7 @@ function Contact() {
                 </span>
                 <div>
                   <h3 className="font-display font-semibold text-primary">Email</h3>
-                  <a href={mailHref()} className="mt-1 text-sm text-muted-foreground hover:text-primary block">{site.email}</a>
+                  <a href={mailHref()} className="mt-1 block break-all text-sm font-medium text-primary hover:text-gold-text">{site.email}</a>
                 </div>
               </div>
             </div>
@@ -97,24 +100,30 @@ function Contact() {
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="card-base overflow-hidden">
-              <iframe
-                title="SOPAN Constructions office location"
-                src={mapsEmbed}
-                width="100%"
-                height="320"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="block border-0 w-full"
-              />
-            </div>
+          <div>
             <QuoteForm variant="compact" />
           </div>
         </div>
       </section>
 
-      <CallbackBar />
+      {/* MAP */}
+      <section className="pb-16 sm:pb-24">
+        <div className="container-x">
+          <h2 className="heading-lg text-primary">Find our office</h2>
+          <div className="card-base mt-6 overflow-hidden">
+            <iframe
+              title="SOPAN Constructions office location"
+              src={mapsEmbed}
+              width="100%"
+              height="400"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="block border-0 w-full"
+            />
+          </div>
+        </div>
+      </section>
+
     </SiteShell>
   );
 }

@@ -75,7 +75,7 @@ function Projects() {
                   </span>
                 </div>
                 <div className="p-5 sm:p-6">
-                  <div className="text-[11px] font-semibold tracking-wider uppercase text-gold">{p.type}</div>
+                  <div className="text-[11px] font-semibold tracking-wider uppercase text-gold-text">{p.type}</div>
                   <h3 className="mt-1.5 font-display text-lg font-bold text-primary">{p.name}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.description}</p>
                   {realValue(p.location) || realValue(p.area) || realValue(p.year) ? (

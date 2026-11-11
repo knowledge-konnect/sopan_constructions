@@ -1,6 +1,7 @@
+import { isEmailjsConfigured, emailjsConfig } from "@/lib/emailjs";
 import { site, waHref } from "@/lib/site";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 
 type Props = { variant?: "full" | "compact"; className?: string; defaultService?: string };
 type Errors = Record<string, string>;
@@ -23,6 +24,7 @@ const initialValues = {
   contactMethod: "Phone",
   budget: "",
   details: "",
+  company: "", // honeypot — real visitors never see or fill this
 };
 
 type Values = typeof initialValues;
@@ -33,6 +35,7 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
   const [errors, setErrors] = useState<Errors>({});
   const [sentUrl, setSentUrl] = useState<string>("");
   const sending = useRef(false);
+  const uid = useId();
 
   useEffect(() => {
     if (defaultService && !values.type) {
@@ -82,6 +85,36 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
     ].join("\n");
   }
 
+  // Backup copy of every enquiry to the business inbox via EmailJS, so a lead is not lost
+  // if the visitor never presses Send in WhatsApp. Silent no-op until the env vars are set.
+  function emailEnquiry(v: Values, submittedAt: string) {
+    if (!isEmailjsConfigured) return;
+    import("@emailjs/browser")
+      .then(({ default: emailjs }) =>
+        emailjs.send(
+          emailjsConfig.serviceId!,
+          emailjsConfig.templateId!,
+          {
+            name: v.name.trim(),
+            phone: v.phone.trim(),
+            email: v.email.trim() || "—",
+            location: v.location.trim() || "—",
+            service: v.type,
+            contact_method: v.contactMethod,
+            budget: v.budget || "—",
+            message: v.details.trim() || "—",
+            submitted_at: `${submittedAt} IST`,
+            page: window.location.pathname,
+            reply_to: v.email.trim() || undefined,
+          },
+          { publicKey: emailjsConfig.publicKey },
+        ),
+      )
+      .catch(() => {
+        /* the WhatsApp message is still the primary channel */
+      });
+  }
+
   function validate(v: Values): Errors {
     const e: Errors = {};
     if (v.name.trim().length < 2) e.name = "Please enter your full name.";
@@ -97,6 +130,8 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
     ev.preventDefault();
     if (sending.current) return;
 
+    if (values.company) return; // honeypot filled → bot, ignore silently
+
     const found = validate(values);
     setErrors(found);
     if (Object.keys(found).length > 0) {
@@ -110,9 +145,13 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
     const submittedAt = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
     try {
+      emailEnquiry(values, submittedAt);
       const url = waHref(buildWhatsAppMessage(values, submittedAt));
-      const win = window.open(url, "_blank", "noopener,noreferrer");
+      // Note: do NOT pass "noopener" in the features string — it makes window.open return null
+      // even when the tab opens, which previously triggered a false error.
+      const win = window.open(url, "_blank");
       if (!win) throw new Error("popup-blocked");
+      win.opener = null;
       setSentUrl(url);
       setValues({ ...initialValues, type: defaultService });
       setErrors({});
@@ -133,7 +172,7 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
   const field = (k: string) => `mt-1.5 ${inputCls} ${errors[k] ? errCls : ""}`;
   const Err = ({ k }: { k: string }) =>
     errors[k] ? (
-      <span className="mt-1.5 flex items-start gap-1.5 text-sm text-destructive">
+      <span id={`${uid}-${k}-error`} className="mt-1.5 flex items-start gap-1.5 text-sm text-destructive">
         <AlertCircle className="h-3.5 w-3.5 mt-px shrink-0" /> {errors[k]}
       </span>
     ) : null;
@@ -141,7 +180,7 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
   if (status === "success") {
     return (
       <div className={`card-base p-8 text-center ${className}`} role="status" aria-live="polite">
-        <CheckCircle2 className="h-12 w-12 text-gold mx-auto" />
+        <CheckCircle2 className="h-12 w-12 text-gold-text mx-auto" />
         <h3 className="heading-lg mt-3 text-primary">Almost done!</h3>
         <p className="mt-2 text-base text-muted-foreground leading-relaxed">
           WhatsApp should now be open with your prefilled enquiry. Please press Send in WhatsApp to complete your enquiry.
@@ -173,12 +212,12 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
       <div className="grid sm:grid-cols-2 gap-5">
         <label className="block">
           <span className="text-sm font-semibold text-foreground/80">Full Name *</span>
-          <input name="name" value={values.name} onChange={set("name")} maxLength={80} className={field("name")} placeholder="Your full name" aria-invalid={!!errors.name} />
+          <input name="name" autoComplete="name" aria-required="true" value={values.name} onChange={set("name")} maxLength={80} className={field("name")} placeholder="Your full name" aria-invalid={!!errors.name} aria-describedby={errors.name ? `${uid}-name-error` : undefined} />
           <Err k="name" />
         </label>
         <label className="block">
           <span className="text-sm font-semibold text-foreground/80">Mobile Number *</span>
-          <input name="phone" value={values.phone} onChange={set("phone")} inputMode="tel" className={field("phone")} placeholder="+91 9XXXXXXXXX" aria-invalid={!!errors.phone} />
+          <input name="phone" type="tel" autoComplete="tel" aria-required="true" value={values.phone} onChange={set("phone")} inputMode="tel" className={field("phone")} placeholder="+91 9XXXXXXXXX" aria-invalid={!!errors.phone} aria-describedby={errors.phone ? `${uid}-phone-error` : undefined} />
           <Err k="phone" />
         </label>
       </div>
@@ -187,18 +226,18 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
         {variant === "full" && (
           <label className="block">
             <span className="text-sm font-semibold text-foreground/80">Email</span>
-            <input type="email" name="email" value={values.email} onChange={set("email")} maxLength={120} className={field("email")} placeholder="you@example.com" aria-invalid={!!errors.email} />
+            <input type="email" name="email" autoComplete="email" value={values.email} onChange={set("email")} maxLength={120} className={field("email")} placeholder="you@example.com" aria-invalid={!!errors.email} aria-describedby={errors.email ? `${uid}-email-error` : undefined} />
             <Err k="email" />
           </label>
         )}
         <label className="block">
           <span className="text-sm font-semibold text-foreground/80">Preferred Location</span>
-          <input name="location" value={values.location} onChange={set("location")} maxLength={120} className={field("location")} placeholder="Your preferred area or locality" aria-invalid={!!errors.location} />
+          <input name="location" value={values.location} onChange={set("location")} maxLength={120} className={field("location")} placeholder="Your preferred area or locality" aria-invalid={!!errors.location} aria-describedby={errors.location ? `${uid}-location-error` : undefined} />
           <Err k="location" />
         </label>
         <label className="block">
           <span className="text-sm font-semibold text-foreground/80">Interested Service *</span>
-          <select name="type" value={values.type} onChange={set("type")} className={field("type")} aria-invalid={!!errors.type}>
+          <select name="type" value={values.type} onChange={set("type")} className={field("type")} aria-invalid={!!errors.type} aria-required="true" aria-describedby={errors.type ? `${uid}-type-error` : undefined}>
             <option value="">Select an option</option>
             {constructionTypes.map((t) => (
               <option key={t}>{t}</option>
@@ -236,6 +275,13 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
         <span className="text-sm font-semibold text-foreground/80">Message / Requirements</span>
         <textarea name="details" value={values.details} onChange={set("details")} rows={variant === "full" ? 4 : 3} maxLength={1500} className={`mt-1.5 ${inputCls}`} placeholder="Tell us about your construction or design requirement..." />
       </label>
+
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label>
+          Company
+          <input tabIndex={-1} autoComplete="off" name="company" value={values.company} onChange={set("company")} />
+        </label>
+      </div>
 
       <button type="submit" disabled={loading} className="btn-primary w-full !py-3.5 text-base disabled:opacity-70 disabled:cursor-not-allowed">
         {loading ? (

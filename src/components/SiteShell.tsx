@@ -13,7 +13,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       {/* Desktop floating WhatsApp; mobile gets the sticky bottom CTA bar */}
       <WhatsAppFab />
       <MobileCtaBar />
-      <div className="h-[64px] lg:hidden" aria-hidden />
+      <div className="h-[calc(64px+env(safe-area-inset-bottom))] lg:hidden" aria-hidden />
     </div>
   );
 }
