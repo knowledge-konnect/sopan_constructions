@@ -15,7 +15,7 @@ export function Footer() {
             className="block h-14 w-auto md:h-16 lg:h-20 object-contain"
           />
           <p className="mt-5 text-[15px] text-white/75 leading-relaxed max-w-xs">
-            Residential construction and design solutions with clear communication, practical planning and quality workmanship.
+            Construction and design solutions with clear communication, practical planning and quality workmanship.
           </p>
         </div>
 
@@ -24,6 +24,7 @@ export function Footer() {
           <ul className="space-y-2.5 text-[15px] text-white/80">
             <li><Link to="/" className="hover:text-gold">Home</Link></li>
             <li><Link to="/about" className="hover:text-gold">About Us</Link></li>
+            <li><Link to="/services" className="hover:text-gold">Services</Link></li>
             <li><Link to="/projects" className="hover:text-gold">Projects</Link></li>
             <li><Link to="/quote" className="hover:text-gold">Get a Free Quote</Link></li>
             <li><Link to="/contact" className="hover:text-gold">Contact</Link></li>
@@ -33,10 +34,15 @@ export function Footer() {
         <div>
           <h4 className="text-sm font-semibold tracking-widest uppercase text-gold mb-4">Services</h4>
           <ul className="space-y-2.5 text-[15px] text-white/80">
-            <li>Residential Construction</li>
-            <li>Apartment Construction</li>
-            <li>Planning & Design</li>
-            <li>Renovation & Remodeling</li>
+            {[
+              ["planning-design", "Planning & Design"],
+              ["residential", "Residential Construction"],
+              ["apartment", "Apartment Construction"],
+              ["commercial", "Commercial Construction"],
+              ["renovation", "Renovation & Remodeling"],
+            ].map(([id, label]) => (
+              <li key={id}><Link to="/services" hash={id} className="hover:text-gold transition-colors">{label}</Link></li>
+            ))}
           </ul>
         </div>
 
@@ -69,9 +75,9 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-x py-5 flex flex-col sm:flex-row gap-3 items-center justify-between text-sm text-white/65">
+        <div className="container-x py-5 lg:pb-16 flex flex-col sm:flex-row gap-3 items-center justify-between text-sm text-white/65">
           <p>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</p>
-          <p>Residential construction and design solutions.</p>
+          <p>Construction and design solutions.</p>
         </div>
       </div>
     </footer>

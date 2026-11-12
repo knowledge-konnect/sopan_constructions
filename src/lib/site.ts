@@ -1,6 +1,8 @@
 export const site = {
   name: "SOPAN Constructions and Infra Developers",
   legalName: "SOPAN Constructions and Infra Developers",
+  // Optional: fill in to sign the "message from our team" on the About page, e.g. { name: "Full Name", role: "Founder" }
+  owner: { name: "", role: "" },
   tagline: "YOUR DREAMS. OUR COMMITMENT.",
   phone: "+91 77803 87486",
   phoneTel: "+917780387486",

@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { faqs, processSteps, stats, testimonials } from "@/lib/content";
+import { faqs, processSteps, testimonials } from "@/lib/content";
 import { projects, realValue } from "@/lib/projects";
 import { site, waHref } from "@/lib/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -24,6 +24,7 @@ import {
   MessageCircle,
   MessageSquare,
   PencilRuler,
+  Store,
   PaintBucket,
   Ruler,
   ShieldCheck,
@@ -38,9 +39,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: `${site.legalName} | Residential Construction in Visakhapatnam` },
-      { name: "description", content: "SOPAN Constructions and Infra Developers delivers residential construction, apartment construction, planning & design, and renovation services in Visakhapatnam and nearby areas." },
+      { name: "description", content: "SOPAN Constructions and Infra Developers delivers residential, apartment and commercial construction, planning & design, and renovation services in Visakhapatnam and nearby areas." },
       { property: "og:title", content: `${site.legalName} | Residential Construction in Visakhapatnam` },
-      { property: "og:description", content: "Residential construction, apartment construction, planning & design and renovation in Visakhapatnam." },
+      { property: "og:description", content: "Residential, apartment and commercial construction, planning & design and renovation in Visakhapatnam." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "https://sopanconstructions.in/" },
@@ -62,9 +63,10 @@ const features = [
 
 
 const services = [
+  { id: "planning-design", icon: PencilRuler, title: "Planning & Design", desc: "Layout planning, design guidance, and technical detailing that supports a functional, well-considered home." },
   { id: "residential", icon: Home, title: "Residential Construction", desc: "Independent houses and villas built to approved drawings with supervised civil work and practical detailing." },
   { id: "apartment", icon: Building2, title: "Apartment Construction", desc: "Multi-storey residential developments planned for structure, services and long-term practicality." },
-  { id: "planning-design", icon: PencilRuler, title: "Planning & Design", desc: "Layout planning, design guidance, and technical detailing that supports a functional, well-considered home." },
+  { id: "commercial", icon: Store, title: "Commercial Construction", desc: "Shops, offices and commercial buildings planned for practical layouts, durability and efficient use of space." },
   { id: "renovation", icon: Hammer, title: "Renovation & Remodeling", desc: "Upgrades, structural repairs and layout improvements to refresh and modernise existing homes." },
 ];
 
@@ -85,13 +87,13 @@ function Home_() {
 
         <div className="container-x relative py-20 sm:py-32 lg:py-40 text-white">
           <span className="eyebrow">
-            <MapPin className="h-3.5 w-3.5" /> Visakhapatnam · Residential construction &amp; design
+            <MapPin className="h-3.5 w-3.5" /> Construction and design support
           </span>
           <h1 className="heading-xl mt-5 max-w-3xl text-white fade-up">
             Your Dream Home. Our Commitment. Quality in Every Step.
           </h1>
           <p className="mt-6 max-w-xl text-lg sm:text-xl leading-relaxed text-white/90 fade-up">
-            From planning your home to building independent houses and residential apartments, SOPAN brings your vision to life with thoughtful designs, strong construction and quality workmanship.
+            From planning your home to building independent houses, apartments and commercial buildings, SOPAN brings your vision to life with thoughtful designs, strong construction and quality workmanship.
           </p>
 
           <div className="mt-9 flex flex-wrap gap-3 sm:gap-4 fade-up">
@@ -103,14 +105,16 @@ function Home_() {
             </a>
           </div>
 
-          <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/15 rounded-2xl overflow-hidden max-w-3xl">
-            {stats.map((s) => (
-              <div key={s.label} className="bg-primary/80 backdrop-blur px-4 py-5 sm:px-5 text-center">
-                <div className="font-display text-2xl sm:text-3xl font-bold text-gold">{s.value}</div>
-                <div className="text-[11px] sm:text-xs text-white/80 mt-1.5 uppercase tracking-wider leading-tight">
-                  {s.label}
-                </div>
-              </div>
+          <div className="mt-12 flex max-w-3xl flex-wrap gap-2.5">
+            {services.map((s) => (
+              <Link
+                key={s.id}
+                to="/services"
+                hash={s.id}
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-primary/50 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur transition-colors hover:bg-white/10 hover:text-white"
+              >
+                <s.icon className="h-4 w-4 text-gold" /> {s.title}
+              </Link>
             ))}
           </div>
 
@@ -125,7 +129,7 @@ function Home_() {
             <span className="eyebrow">Why Choose SOPAN</span>
             <h2 className="heading-lg mt-2 text-primary">A practical, detail-focused construction approach</h2>
             <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
-              We focus on residential planning, practical execution and clear communication to make each project easier to understand and manage.
+              We focus on practical planning, careful execution and clear communication to make each project easier to understand and manage.
             </p>
 
 
@@ -156,13 +160,13 @@ function Home_() {
               View all services <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="mt-10 flex flex-wrap justify-center gap-5">
             {services.map((s) => (
               <Link
                 to="/services"
                 hash={s.id}
                 key={s.title}
-                className="card-base group flex h-full flex-col p-6 sm:p-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                className="card-base group flex w-full flex-col p-6 sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.85rem)] sm:p-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
               >
                 <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gold/15 text-gold-text transition-colors duration-300 group-hover:bg-gold group-hover:text-primary">
                   <s.icon className="h-6 w-6" />
@@ -188,8 +192,8 @@ function Home_() {
             <span className="eyebrow">How We Work</span>
             <h2 className="heading-lg mt-2 text-primary">A simple five-step process</h2>
             <p className="mt-3 text-base font-semibold text-primary/80">
-              Discuss <span className="text-gold-text">→</span> Site Visit <span className="text-gold-text">→</span> Estimate{" "}
-              <span className="text-gold-text">→</span> Execute <span className="text-gold-text">→</span> Handover
+              Discussion <span className="text-gold-text">→</span> Review <span className="text-gold-text">→</span> Estimate{" "}
+              <span className="text-gold-text">→</span> Construction <span className="text-gold-text">→</span> Handover
             </p>
             <p className="mt-2 text-base text-muted-foreground leading-relaxed">
               From the first conversation to handover, you always know what happens next.
@@ -226,14 +230,14 @@ function Home_() {
 
       {/* ABOUT */}
       <section className="section-y">
-        <div className="container-x grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-          <div>
+        <div className="container-x">
+          <div className="max-w-3xl">
             <span className="eyebrow">About Us</span>
-            <h2 className="heading-lg mt-2 text-primary">Residential planning and construction with a practical approach</h2>
-            <p className="mt-4 text-base text-muted-foreground leading-relaxed max-w-xl">
-              SOPAN Constructions and Infra Developers focuses on housing and renovation projects, apartment work and planning support. We aim to understand the requirement clearly and provide practical recommendations before execution begins.
+            <h2 className="heading-lg mt-2 text-primary">Planning and construction with a practical approach</h2>
+            <p className="mt-4 text-base text-muted-foreground leading-relaxed">
+              SOPAN Constructions and Infra Developers focuses on housing, apartment and commercial projects, renovation and planning support. We aim to understand the requirement clearly and provide practical recommendations before execution begins.
             </p>
-            <p className="mt-3 text-base text-muted-foreground leading-relaxed max-w-xl">
+            <p className="mt-3 text-base text-muted-foreground leading-relaxed">
               We keep the process clear and straightforward, with practical planning, honest estimates and careful execution from initial discussions to handover.
             </p>
             <div className="mt-8 grid sm:grid-cols-2 gap-3">
@@ -257,20 +261,10 @@ function Home_() {
                 Get a Free Quote <ArrowRight className="h-4 w-4" />
               </Link>
 
-              <Link to="/about" className="btn-ghost-primary text-sm">
+              <Link to="/about" className="btn-ghost-primary text-sm border border-primary/40 hover:bg-primary/5">
                 More about us
               </Link>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {stats.map((st) => (
-              <div key={st.label} className="card-base p-6 sm:p-7 text-center">
-                <div className="font-display text-3xl font-bold text-gold-text">{st.value}</div>
-                <div className="mt-2 text-sm font-medium uppercase tracking-wider text-muted-foreground leading-tight">
-                  {st.label}
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -283,7 +277,7 @@ function Home_() {
               <span className="eyebrow">Project Categories</span>
               <h2 className="heading-lg mt-2 text-primary">Construction Work We Undertake</h2>
               <p className="mt-3 text-base text-muted-foreground leading-relaxed">
-                Residential construction, apartment work, planning support and renovation categories handled with a practical, quality-conscious approach.
+                Residential, apartment and commercial construction, planning support and renovation categories handled with a practical, quality-conscious approach.
               </p>
             </div>
 
@@ -292,7 +286,7 @@ function Home_() {
             </Link>
           </div>
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {projects.slice(0, 6).map((p) => (
+            {projects.slice(0, 3).map((p) => (
               <Link
                 to="/projects"
                 key={p.slug}

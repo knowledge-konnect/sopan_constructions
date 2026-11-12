@@ -85,7 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: `${site.legalName} | Residential Construction in Visakhapatnam` },
-      { name: "description", content: "Residential construction, apartment construction, planning & design, and renovation services in Visakhapatnam, with practical execution and clear communication." },
+      { name: "description", content: "Residential, apartment and commercial construction, planning & design, and renovation services in Visakhapatnam, with practical execution and clear communication." },
       { name: "author", content: site.legalName },
       { name: "theme-color", content: "#0F2D5C" },
       { property: "og:site_name", content: site.name },

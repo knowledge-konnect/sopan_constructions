@@ -7,9 +7,10 @@ type Props = { variant?: "full" | "compact"; className?: string; defaultService?
 type Errors = Record<string, string>;
 
 const constructionTypes = [
+  "Planning & Design",
   "Residential Construction",
   "Apartment Construction",
-  "Planning & Design",
+  "Commercial Construction",
   "Renovation & Remodeling",
   "Other Enquiry",
 ];

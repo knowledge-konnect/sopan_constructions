@@ -5,9 +5,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Clock, Mail, MessageCircle, Phone } from "lucide-react";
 
 const allowedServices = new Set([
+  "Planning & Design",
   "Residential Construction",
   "Apartment Construction",
-  "Planning & Design",
+  "Commercial Construction",
   "Renovation & Remodeling",
   "Other Enquiry",
 ]);
@@ -19,9 +20,9 @@ export const Route = createFileRoute("/quote")({
   head: () => ({
     meta: [
       { title: "Request a Free Quote | SOPAN Constructions" },
-      { name: "description", content: "Request a free quote for residential construction, apartment construction, planning, design and renovation services." },
+      { name: "description", content: "Request a free quote for residential, apartment and commercial construction, planning, design and renovation services in Visakhapatnam." },
       { property: "og:title", content: "Request a Free Quote | SOPAN Constructions" },
-      { property: "og:description", content: "Free quote for residential construction and design requirements." },
+      { property: "og:description", content: "Free quote for construction, design and renovation requirements." },
       { property: "og:url", content: "https://sopanconstructions.in/quote" },
     ],
     links: [{ rel: "canonical", href: "https://sopanconstructions.in/quote" }],
@@ -41,6 +42,7 @@ function Quote() {
           <p className="mt-5 text-white/80 max-w-2xl">
             Share your construction or design requirements and our team will connect with you to discuss the next steps.
           </p>
+          <p className="mt-3 text-sm text-white/65">We reply during working hours: Monday to Saturday, 9:00 AM – 7:00 PM.</p>
         </div>
       </section>
 

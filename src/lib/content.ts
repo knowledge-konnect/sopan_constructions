@@ -8,11 +8,11 @@ export const stats = [
 export const testimonials: { name: string; project: string; quote: string }[] = [];
 
 export const processSteps = [
-  { step: "01", title: "Discuss", desc: "We understand your home or apartment requirements, design needs, site conditions and budget expectations." },
-  { step: "02", title: "Site Visit", desc: "Our team reviews the site, requirements and practical constraints before planning the work." },
-  { step: "03", title: "Estimate", desc: "Receive a clear, itemised estimate covering the proposed scope, materials and expected project costs." },
-  { step: "04", title: "Execute", desc: "Construction follows planned milestones with quality-conscious execution and regular updates." },
-  { step: "05", title: "Handover", desc: "Final checks, finishing touch-ups and a smooth handover for your completed home or apartment." },
+  { step: "01", title: "Project Discussion", desc: "We understand your requirements, design needs, site conditions and budget expectations." },
+  { step: "02", title: "Site & Requirements Review", desc: "Our team reviews the site, requirements and practical constraints before planning the work." },
+  { step: "03", title: "Planning & Estimate", desc: "Receive a clear plan and an itemised estimate covering the proposed scope, materials and expected project costs." },
+  { step: "04", title: "Construction", desc: "Construction follows planned milestones with quality-conscious execution and regular updates." },
+  { step: "05", title: "Handover", desc: "Final checks, finishing touch-ups and a smooth handover of your completed project." },
 ];
 
 export const faqs = [
@@ -23,6 +23,10 @@ export const faqs = [
   {
     q: "Do you undertake residential apartment construction?",
     a: "Yes. We work on residential apartment construction projects, including practical layouts, multi-storey execution and shared building facilities.",
+  },
+  {
+    q: "Do you construct commercial buildings?",
+    a: "Yes. We undertake commercial construction such as shops and showrooms, office buildings, small commercial complexes, and warehouses and industrial sheds, with practical layouts and coordinated execution.",
   },
   {
     q: "Do you provide 2D and 3D floor plans?",
