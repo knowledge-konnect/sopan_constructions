@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, MessageCircle, FileText } from "lucide-react";
+import { Phone, FileText } from "lucide-react";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 import { phoneHref, waHref } from "@/lib/site";
 
 export function MobileCtaBar() {
@@ -16,12 +17,12 @@ export function MobileCtaBar() {
           rel="noreferrer"
           className="flex flex-col items-center gap-1 py-3 text-white/90 active:bg-white/10"
         >
-          <MessageCircle className="h-5 w-5 text-whatsapp" />
+          <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
           <span className="text-[11px] font-semibold tracking-wide">WhatsApp</span>
         </a>
         <Link to="/quote" className="flex flex-col items-center gap-1 py-3 bg-gold text-primary">
           <FileText className="h-5 w-5" />
-          <span className="text-[10px] font-bold tracking-wide leading-tight text-center">Get a Free Quote</span>
+          <span className="text-[11px] font-bold tracking-wide">Quote</span>
         </Link>
       </div>
     </div>

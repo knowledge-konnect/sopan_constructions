@@ -2,26 +2,28 @@ import { QuoteForm } from "@/components/QuoteForm";
 import { SiteShell } from "@/components/SiteShell";
 import { mailHref, phoneHref, site, waHref } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Mail, MessageCircle, Phone } from "lucide-react";
+import { Clock, Mail, Phone } from "lucide-react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 
 const allowedServices = new Set([
+  "Planning & Design",
   "Residential Construction",
   "Apartment Construction",
-  "Planning & Design",
+  "Commercial Construction",
   "Renovation & Remodeling",
   "Other Enquiry",
 ]);
 
 export const Route = createFileRoute("/quote")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    service: typeof search.service === "string" && allowedServices.has(search.service) ? search.service : "",
+  validateSearch: (search: Record<string, unknown>): { service?: string } => ({
+    service: typeof search.service === "string" && allowedServices.has(search.service) ? search.service : undefined,
   }),
   head: () => ({
     meta: [
       { title: "Request a Free Quote | SOPAN Constructions" },
-      { name: "description", content: "Request a free quote for residential construction, apartment construction, planning, design and renovation services." },
+      { name: "description", content: "Request a free quote for residential, apartment and commercial construction, planning, design and renovation services in Visakhapatnam." },
       { property: "og:title", content: "Request a Free Quote | SOPAN Constructions" },
-      { property: "og:description", content: "Free quote for residential construction and design requirements." },
+      { property: "og:description", content: "Free quote for construction, design and renovation requirements." },
       { property: "og:url", content: "https://sopanconstructions.in/quote" },
     ],
     links: [{ rel: "canonical", href: "https://sopanconstructions.in/quote" }],
@@ -30,7 +32,7 @@ export const Route = createFileRoute("/quote")({
 });
 
 function Quote() {
-  const { service } = Route.useSearch();
+  const { service = "" } = Route.useSearch();
 
   return (
     <SiteShell>
@@ -41,6 +43,7 @@ function Quote() {
           <p className="mt-5 text-white/80 max-w-2xl">
             Share your construction or design requirements and our team will connect with you to discuss the next steps.
           </p>
+          <p className="mt-3 text-sm text-white/65">We reply during working hours: Monday to Saturday, 9:00 AM – 7:00 PM.</p>
         </div>
       </section>
 
@@ -49,13 +52,13 @@ function Quote() {
           <QuoteForm defaultService={service} />
 
           <aside className="space-y-5 lg:sticky lg:top-28">
-            <div className="card-base p-6 bg-primary text-white">
+            <div className="card-base no-lift p-6 bg-primary text-white">
               <h3 className="font-display text-lg font-semibold text-gold">Prefer to talk directly?</h3>
               <p className="mt-2 text-sm text-white/80">Reach our team on phone or WhatsApp and share your requirement.</p>
               <div className="mt-5 space-y-2">
                 <a href={phoneHref} className="btn-primary w-full text-sm"><Phone className="h-4 w-4" /> {site.phone}</a>
                 <a href={waHref()} target="_blank" rel="noreferrer" className="btn-outline-light w-full text-sm">
-                  <MessageCircle className="h-4 w-4" /> WhatsApp Us
+                  <WhatsAppIcon className="h-4 w-4" /> WhatsApp Us
                 </a>
                 <a href={mailHref("Quote request")} className="btn-outline-light w-full text-sm">
                   <Mail className="h-4 w-4" /> Email Us
@@ -63,9 +66,9 @@ function Quote() {
               </div>
             </div>
 
-            <div className="card-base p-6">
+            <div className="card-base no-lift p-6">
               <h4 className="font-display font-semibold text-primary flex items-center gap-2">
-                <Clock className="h-5 w-5 text-gold" /> Working Hours
+                <Clock className="h-5 w-5 text-gold-text" /> Working Hours
               </h4>
               <dl className="mt-3 text-sm text-muted-foreground space-y-1.5">
                 <div className="flex justify-between"><dt>Monday – Saturday</dt><dd className="text-foreground">9:00 AM – 7:00 PM</dd></div>
@@ -73,7 +76,7 @@ function Quote() {
               </dl>
             </div>
 
-            <div className="card-base p-6">
+            <div className="card-base no-lift p-6">
               <h4 className="font-display font-semibold text-primary">What happens next?</h4>
               <ol className="mt-3 space-y-2.5 text-sm">
                 {[
