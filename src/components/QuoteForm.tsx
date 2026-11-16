@@ -1,5 +1,6 @@
 import { isEmailjsConfigured, emailjsConfig } from "@/lib/emailjs";
 import { site, waHref } from "@/lib/site";
+import { Link } from "@tanstack/react-router";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 
@@ -180,7 +181,7 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
 
   if (status === "success") {
     return (
-      <div className={`card-base p-8 text-center ${className}`} role="status" aria-live="polite">
+      <div className={`card-base no-lift p-8 text-center ${className}`} role="status" aria-live="polite">
         <CheckCircle2 className="h-12 w-12 text-gold-text mx-auto" />
         <h3 className="heading-lg mt-3 text-primary">Almost done!</h3>
         <p className="mt-2 text-base text-muted-foreground leading-relaxed">
@@ -199,7 +200,7 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
   const loading = status === "loading";
 
   return (
-    <form onSubmit={onSubmit} noValidate className={`card-base p-6 sm:p-8 space-y-5 ${className}`}>
+    <form onSubmit={onSubmit} noValidate className={`card-base no-lift p-6 sm:p-8 space-y-5 ${className}`}>
       {status === "error" && (
         <div
           role="alert"
@@ -294,7 +295,8 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
         )}
       </button>
       <p className="text-sm text-muted-foreground text-center leading-relaxed">
-        Your details are shared through your own WhatsApp message and used only to respond to your enquiry.
+        Your details are shared through your own WhatsApp message and used only to respond to your enquiry. See our{" "}
+        <Link to="/privacy" className="font-medium text-primary underline underline-offset-2">Privacy Policy</Link>.
       </p>
 
     </form>

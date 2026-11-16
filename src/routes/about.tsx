@@ -3,7 +3,7 @@ import { CallbackBar } from "@/components/CallbackBar";
 import { SiteShell } from "@/components/SiteShell";
 import { site } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
-import { Award, Eye, HeartHandshake, Target } from "lucide-react";
+import { Eye, HeartHandshake, Quote, Target } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -55,20 +55,20 @@ function About() {
             { icon: Target, t: "Mission", d: "Deliver well-planned projects with disciplined execution, transparent guidance and dependable support." },
             { icon: HeartHandshake, t: "Values", d: "Quality, transparency, accountability and respectful communication guide every stage of the project." },
           ].map((b) => (
-            <div key={b.t} className="card-base p-6">
+            <div key={b.t} className="card-base no-lift p-6">
               <div className="grid h-12 w-12 place-items-center rounded-md bg-primary text-gold">
                 <b.icon className="h-6 w-6" />
               </div>
               <h3 className="mt-4 font-display text-xl font-semibold text-primary">{b.t}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{b.d}</p>
+              <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed">{b.d}</p>
             </div>
           ))}
         </div>
       </section>
 
       <section className="section-y">
-        <div className="container-x card-base p-8 sm:p-12 bg-primary text-white">
-          <Award className="h-10 w-10 text-gold" />
+        <div className="container-x card-base no-lift p-8 sm:p-12 bg-primary text-white">
+          <Quote className="h-10 w-10 text-gold" />
           <h2 className="heading-lg mt-4 text-white">A message from our team</h2>
           <p className="mt-4 text-white/85 leading-relaxed max-w-3xl">
             "Every home, apartment and commercial project deserves thoughtful planning, clean execution and a client experience built on trust. We focus on practical design, well-managed construction and transparent communication so the final result feels considered, durable and comfortable to use."

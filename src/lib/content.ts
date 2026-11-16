@@ -1,3 +1,5 @@
+import { Calculator, HardHat, KeyRound, MapPinned, MessagesSquare } from "lucide-react";
+
 export const stats = [
   { value: "Residential", label: "Construction Focus" },
   { value: "Apartments", label: "Multi-unit Builds" },
@@ -8,11 +10,11 @@ export const stats = [
 export const testimonials: { name: string; project: string; quote: string }[] = [];
 
 export const processSteps = [
-  { step: "01", title: "Project Discussion", desc: "We understand your requirements, design needs, site conditions and budget expectations." },
-  { step: "02", title: "Site & Requirements Review", desc: "Our team reviews the site, requirements and practical constraints before planning the work." },
-  { step: "03", title: "Planning & Estimate", desc: "Receive a clear plan and an itemised estimate covering the proposed scope, materials and expected project costs." },
-  { step: "04", title: "Construction", desc: "Construction follows planned milestones with quality-conscious execution and regular updates." },
-  { step: "05", title: "Handover", desc: "Final checks, finishing touch-ups and a smooth handover of your completed project." },
+  { step: "01", title: "Project Discussion", icon: MessagesSquare, desc: "We understand your requirements, design needs, site conditions and budget expectations." },
+  { step: "02", title: "Site & Requirements Review", icon: MapPinned, desc: "Our team reviews the site, requirements and practical constraints before planning the work." },
+  { step: "03", title: "Planning & Estimate", icon: Calculator, desc: "Receive a clear plan and an itemised estimate covering the proposed scope, materials and expected project costs." },
+  { step: "04", title: "Construction", icon: HardHat, desc: "Construction follows planned milestones with quality-conscious execution and regular updates." },
+  { step: "05", title: "Handover", icon: KeyRound, desc: "Final checks, finishing touch-ups and a smooth handover of your completed project." },
 ];
 
 export const faqs = [

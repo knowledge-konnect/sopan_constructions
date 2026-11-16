@@ -2,17 +2,26 @@ import { CallbackBar } from "@/components/CallbackBar";
 import { SiteShell } from "@/components/SiteShell";
 import { waHref } from "@/lib/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import {
   ArrowRight,
   Building2,
+  Calculator,
   Check,
+  ClipboardCheck,
   Compass,
-  DraftingCompass,
+  HardHat,
   Home,
+  KeyRound,
+  LandPlot,
   Layers,
+  MapPinned,
+  MessagesSquare,
+  PaintRoller,
+  PencilRuler,
   Ruler,
   Store,
-  Wrench,
 } from "lucide-react";
 
 export const Route = createFileRoute("/services")({
@@ -44,7 +53,7 @@ type Service = {
 const services: Service[] = [
   {
     id: "planning-design",
-    icon: DraftingCompass,
+    icon: PencilRuler,
     title: "Planning & Design",
     desc: "Turn your ideas into a well-planned home with comprehensive architectural and technical design solutions. From 2D layouts and 3D visualisation to structural drawings and exterior elevations, we help you plan before construction begins.",
     benefits: [
@@ -109,7 +118,7 @@ const services: Service[] = [
   },
   {
     id: "renovation",
-    icon: Wrench,
+    icon: PaintRoller,
     title: "Renovation & Remodeling",
     desc: "Give your existing home a fresh look with thoughtful renovation and remodeling solutions. We help improve layouts, upgrade essential spaces and enhance the appearance and functionality of your home.",
     items: [
@@ -126,17 +135,17 @@ const services: Service[] = [
 ];
 
 const guide = [
-  { situation: "I have a plot but no plan yet", answer: "Planning & Design", href: "#planning-design" },
-  { situation: "I have approved plans and want to build", answer: "Residential, Apartment or Commercial Construction", href: "#residential" },
-  { situation: "I want to upgrade an existing home", answer: "Renovation & Remodeling", href: "#renovation" },
+  { situation: "I have a plot but no plan yet", answer: "Planning & Design", href: "#planning-design", icon: LandPlot },
+  { situation: "I have approved plans and want to build", answer: "Residential, Apartment or Commercial Construction", href: "#residential", icon: ClipboardCheck },
+  { situation: "I want to upgrade an existing home", answer: "Renovation & Remodeling", href: "#renovation", icon: PaintRoller },
 ];
 
 const steps = [
-  { title: "Project Discussion", text: "Share your requirements, plot details and budget." },
-  { title: "Site & Requirements Review", text: "We review the site and confirm the scope of work." },
-  { title: "Planning & Estimate", text: "You receive a clear plan and an itemised estimate." },
-  { title: "Construction", text: "Work proceeds with regular updates." },
-  { title: "Handover", text: "Final walkthrough and handover." },
+  { icon: MessagesSquare, title: "Project Discussion", text: "Share your requirements, plot details and budget." },
+  { icon: MapPinned, title: "Site & Requirements Review", text: "We review the site and confirm the scope of work." },
+  { icon: Calculator, title: "Planning & Estimate", text: "You receive a clear plan and an itemised estimate." },
+  { icon: HardHat, title: "Construction", text: "Work proceeds with regular updates." },
+  { icon: KeyRound, title: "Handover", text: "Final walkthrough and handover." },
 ];
 
 function Dot() {
@@ -149,6 +158,22 @@ function Dot() {
 }
 
 function Services() {
+  const [active, setActive] = useState(services[0].id);
+
+  // highlight the section currently being read
+  useEffect(() => {
+    const els = services.map((s) => document.getElementById(s.id)).filter(Boolean) as HTMLElement[];
+    const io = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.find((e) => e.isIntersecting);
+        if (hit) setActive(hit.target.id);
+      },
+      { rootMargin: "-25% 0px -60% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <SiteShell>
       <section className="bg-primary text-white">
@@ -174,7 +199,7 @@ function Services() {
               Get a Free Quote <ArrowRight className="h-4 w-4" />
             </Link>
             <a href={waHref()} target="_blank" rel="noreferrer" className="btn-whatsapp">
-              WhatsApp us
+              <WhatsAppIcon className="h-4 w-4" /> WhatsApp us
             </a>
           </div>
         </div>
@@ -185,11 +210,16 @@ function Services() {
           <h2 className="font-display text-xl font-bold text-primary">Not sure where to start?</h2>
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {guide.map((g) => (
-              <a key={g.situation} href={g.href} className="card-base group block p-5">
-                <p className="text-sm text-muted-foreground">{g.situation}</p>
-                <p className="mt-2 flex items-center gap-2 font-display font-semibold text-primary group-hover:text-gold-text transition-colors">
-                  {g.answer} <ArrowRight className="h-4 w-4 shrink-0" />
-                </p>
+              <a key={g.situation} href={g.href} className="card-base group flex items-start gap-4 p-5">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-gold/15 text-gold-text">
+                  <g.icon className="h-5 w-5" />
+                </span>
+                <span className="block">
+                  <span className="block text-sm text-muted-foreground">{g.situation}</span>
+                  <span className="mt-1.5 flex items-center gap-2 font-display font-semibold text-primary group-hover:text-gold-text transition-colors">
+                    {g.answer} <ArrowRight className="h-4 w-4 shrink-0" />
+                  </span>
+                </span>
               </a>
             ))}
           </div>
@@ -197,9 +227,28 @@ function Services() {
       </section>
 
       <section className="section-y">
-        <div className="container-x space-y-12">
+        <div className="container-x grid gap-10 lg:grid-cols-[200px_1fr]">
+          <aside className="hidden lg:block">
+            <nav aria-label="Services" className="sticky top-28">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Our services</p>
+              <ul className="space-y-1">
+                {services.map((s) => (
+                  <li key={s.id}>
+                    <a
+                      href={`#${s.id}`}
+                      aria-current={active === s.id ? "true" : undefined}
+                      className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${active === s.id ? "bg-primary text-white" : "text-muted-foreground hover:bg-surface hover:text-primary"}`}
+                    >
+                      {s.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
+          <div className="space-y-12">
           {services.map((s, i) => (
-            <article key={s.id} id={s.id} className="grid lg:grid-cols-[1fr_1.4fr] gap-8 card-base p-6 sm:p-10">
+            <article key={s.id} id={s.id} className="grid xl:grid-cols-[1fr_1.4fr] gap-8 card-base no-lift p-6 sm:p-10">
               <div>
                 <div className="grid h-14 w-14 place-items-center rounded-md bg-primary text-gold">
                   <s.icon className="h-7 w-7" />
@@ -217,7 +266,7 @@ function Services() {
                     <h4 className="font-display font-semibold text-primary">What&apos;s included</h4>
                     <ul className="mt-3 space-y-2">
                       {s.items.map((it) => (
-                        <li key={it} className="flex gap-2.5 items-start text-sm text-foreground/85">
+                        <li key={it} className="flex gap-2.5 items-start text-[15px] leading-relaxed text-foreground/85">
                           <Dot />
                           <span>{it}</span>
                         </li>
@@ -229,7 +278,7 @@ function Services() {
                   <h4 className="font-display font-semibold text-primary">Benefits</h4>
                   <ul className="mt-3 space-y-2">
                     {s.benefits.map((b) => (
-                      <li key={b} className="flex gap-2 text-sm text-foreground/85">
+                      <li key={b} className="flex gap-2 text-[15px] leading-relaxed text-foreground/85">
                         <Check className="h-4 w-4 text-gold-text mt-0.5 shrink-0" /> {b}
                       </li>
                     ))}
@@ -245,7 +294,7 @@ function Services() {
                     </div>
                     <ul className="mt-3 space-y-2">
                       {g.points.map((p) => (
-                        <li key={p} className="flex gap-2 text-sm text-foreground/85">
+                        <li key={p} className="flex gap-2 text-[15px] leading-relaxed text-foreground/85">
                           <Check className="h-4 w-4 text-gold-text mt-0.5 shrink-0" /> {p}
                         </li>
                       ))}
@@ -253,11 +302,12 @@ function Services() {
                   </div>
                 ))}
               </div>
-              <div className="lg:col-span-2 text-[11px] text-muted-foreground">
+              <div className="xl:col-span-2 text-[11px] text-muted-foreground">
                 Service {String(i + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}
               </div>
             </article>
           ))}
+          </div>
         </div>
       </section>
 
@@ -269,10 +319,13 @@ function Services() {
           </div>
           <ol className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {steps.map((st, idx) => (
-              <li key={st.title} className="card-base p-5">
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-gold text-sm font-bold">{idx + 1}</span>
+              <li key={st.title} className="card-base no-lift p-5">
+                <div className="flex items-center justify-between">
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-gold text-sm font-bold">{idx + 1}</span>
+                  <st.icon className="h-5 w-5 text-gold-text" aria-hidden />
+                </div>
                 <h3 className="mt-3 font-display font-semibold text-primary">{st.title}</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{st.text}</p>
+                <p className="mt-1.5 text-[15px] text-muted-foreground leading-relaxed">{st.text}</p>
               </li>
             ))}
           </ol>

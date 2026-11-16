@@ -178,9 +178,15 @@
   }
 
   *:focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 3px solid var(--color-primary);
     outline-offset: 3px;
     border-radius: 4px;
+  }
+
+  /* On dark surfaces the outline switches to gold so it stays visible */
+  :is(.bg-primary, .text-white) *:focus-visible,
+  :is(.bg-primary, .text-white):focus-visible {
+    outline-color: var(--color-gold);
   }
 
   ::selection {
@@ -368,4 +374,16 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Cards that are not clickable should not lift on hover */
+.card-base.no-lift:hover {
+  transform: none;
+  box-shadow: var(--shadow-soft);
+  border-color: color-mix(in oklab, var(--primary) 6%, var(--color-border));
+}
+
+/* Slightly lighter icon strokes for a more modern look */
+svg.lucide {
+  stroke-width: 1.75;
 }

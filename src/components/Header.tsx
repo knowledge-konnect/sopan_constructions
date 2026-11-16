@@ -1,6 +1,6 @@
-import { navigationItems } from "@/lib/site";
+import { navigationItems, phoneHref, site } from "@/lib/site";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function Header() {
@@ -50,7 +50,7 @@ export function Header() {
   return (
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ${scrolled
-        ? "bg-background border-b border-border/80 shadow-[0_1px_0_color-mix(in_oklab,var(--color-primary)_5%,transparent)]"
+        ? "bg-background border-b border-border shadow-[0_10px_24px_-18px_rgba(15,45,92,0.55)]"
         : "bg-background border-b border-transparent"
         }`}
     >
@@ -67,7 +67,7 @@ export function Header() {
           />
         </Link>
 
-        <div className="hidden lg:ml-auto lg:flex items-center gap-5">
+        <div className="hidden lg:ml-auto lg:flex items-center gap-3 xl:gap-4">
           <nav className="flex items-center gap-0.5 xl:gap-1">
             {navigationItems.map((item) => {
               const active = isItemActive(item.to, item.sectionId);
@@ -85,6 +85,15 @@ export function Header() {
               );
             })}
           </nav>
+
+          <a
+            href={phoneHref}
+            aria-label={`Call us on ${site.phone}`}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/25 px-3 py-2.5 text-primary transition-colors hover:bg-primary/5 xl:px-4"
+          >
+            <Phone className="h-4 w-4" />
+            <span className="hidden text-[14px] font-semibold xl:inline">{site.phone}</span>
+          </a>
 
           <Link
             to="/quote"

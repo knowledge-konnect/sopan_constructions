@@ -65,7 +65,7 @@ function Projects() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {list.map((p) => (
-              <article key={p.slug} className="card-base overflow-hidden group">
+              <article key={p.slug} className="card-base no-lift overflow-hidden group">
                 <div className="aspect-[4/3] overflow-hidden relative">
                   <img
                     src={p.image}
@@ -84,7 +84,7 @@ function Projects() {
                 <div className="p-5 sm:p-6">
                   <div className="text-[11px] font-semibold tracking-wider uppercase text-gold-text">{p.type}</div>
                   <h3 className="mt-1.5 font-display text-lg font-bold text-primary">{p.name}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                  <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed">{p.description}</p>
                   {realValue(p.location) || realValue(p.area) || realValue(p.year) ? (
                     <dl className="mt-5 pt-5 border-t border-border grid grid-cols-3 gap-3 text-xs">
                       {realValue(p.location) ? (

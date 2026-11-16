@@ -11,32 +11,50 @@ import { faqs, processSteps, testimonials } from "@/lib/content";
 import { projects, realValue } from "@/lib/projects";
 import { site, waHref } from "@/lib/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import {
   ArrowRight,
-  Layers,
+  BadgeCheck,
   Building2,
+  Calculator,
   Calendar,
-  Hammer,
+  ClipboardCheck,
+  FileText,
   HardHat,
+  Headset,
   HelpCircle,
   Home,
+  Layers,
   MapPin,
-  MessageCircle,
+  MapPinned,
   MessageSquare,
+  PaintRoller,
   PencilRuler,
-  Store,
-  PaintBucket,
   Ruler,
   ShieldCheck,
   Sparkles,
   Star,
-  Users,
-  Wallet
+  Store,
+  Wallet,
 } from "lucide-react";
 
 
 export const Route = createFileRoute("/")({
   head: () => ({
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+    ],
     meta: [
       { title: `${site.legalName} | Residential Construction in Visakhapatnam` },
       { name: "description", content: "SOPAN Constructions and Infra Developers delivers residential, apartment and commercial construction, planning & design, and renovation services in Visakhapatnam and nearby areas." },
@@ -57,7 +75,7 @@ const features = [
   { icon: HardHat, title: "Site-focused execution", desc: "The work is planned around the site conditions, structural requirements and practical build sequence." },
   { icon: MessageSquare, title: "Straightforward communication", desc: "We keep the process clear and easy to follow, with regular updates as the work progresses." },
   { icon: ShieldCheck, title: "Practical project approach", desc: "We focus on realistic planning, organised execution and a quality-conscious finish for each home or apartment project." },
-  { icon: Users, title: "Responsive support", desc: "Our team stays engaged from first discussion through final walkthrough and handover planning." },
+  { icon: Headset, title: "Responsive support", desc: "Our team stays engaged from first discussion through final walkthrough and handover planning." },
 ];
 
 
@@ -67,7 +85,7 @@ const services = [
   { id: "residential", icon: Home, title: "Residential Construction", desc: "Independent houses and villas built to approved drawings with supervised civil work and practical detailing." },
   { id: "apartment", icon: Building2, title: "Apartment Construction", desc: "Multi-storey residential developments planned for structure, services and long-term practicality." },
   { id: "commercial", icon: Store, title: "Commercial Construction", desc: "Shops, offices and commercial buildings planned for practical layouts, durability and efficient use of space." },
-  { id: "renovation", icon: Hammer, title: "Renovation & Remodeling", desc: "Upgrades, structural repairs and layout improvements to refresh and modernise existing homes." },
+  { id: "renovation", icon: PaintRoller, title: "Renovation & Remodeling", desc: "Upgrades, structural repairs and layout improvements to refresh and modernise existing homes." },
 ];
 
 function Home_() {
@@ -87,7 +105,7 @@ function Home_() {
 
         <div className="container-x relative py-20 sm:py-32 lg:py-40 text-white">
           <span className="eyebrow">
-            <MapPin className="h-3.5 w-3.5" /> Construction and design support
+            <HardHat className="h-3.5 w-3.5" /> Construction and design support
           </span>
           <h1 className="heading-xl mt-5 max-w-3xl text-white fade-up">
             Your Dream Home. Our Commitment. Quality in Every Step.
@@ -101,7 +119,7 @@ function Home_() {
               Get a Free Quote <ArrowRight className="h-4 w-4" />
             </Link>
             <a href={waHref()} target="_blank" rel="noreferrer" className="btn-whatsapp">
-              <MessageCircle className="h-4 w-4" /> WhatsApp Us
+              <WhatsAppIcon className="h-4 w-4" /> WhatsApp Us
             </a>
           </div>
 
@@ -136,7 +154,7 @@ function Home_() {
           </div>
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => (
-              <div key={f.title} className="card-base flex h-full flex-col p-6 sm:p-7">
+              <div key={f.title} className="card-base no-lift flex h-full flex-col p-6 sm:p-7">
                 <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-primary text-gold transition-colors duration-300">
                   <f.icon className="h-6 w-6" />
                 </div>
@@ -210,13 +228,15 @@ function Home_() {
                 <span className="sm:hidden relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary font-display text-xs font-bold text-gold">
                   {s.step}
                 </span>
-                <div className="card-base h-full w-full p-5 sm:p-6">
+                <div className="card-base no-lift h-full w-full p-5 sm:p-6">
                   <div className="hidden sm:flex items-center gap-3">
                     <span className="grid h-9 w-9 place-items-center rounded-full bg-primary font-display text-xs font-bold text-gold">
                       {s.step}
                     </span>
                     <span className="h-px flex-1 bg-gold/30" aria-hidden />
+                    <s.icon className="h-5 w-5 shrink-0 text-gold-text" aria-hidden />
                   </div>
+                  <s.icon className="sm:hidden mb-2 h-5 w-5 text-gold-text" aria-hidden />
                   <h3 className="mt-0 sm:mt-4 font-display text-lg font-semibold text-primary">{s.title}</h3>
                   <p className="mt-2 text-base text-muted-foreground leading-relaxed">{s.desc}</p>
 
@@ -242,16 +262,16 @@ function Home_() {
             </p>
             <div className="mt-8 grid sm:grid-cols-2 gap-3">
               {[
-                "Transparent, itemised estimates",
-                "Practical planning before execution",
-                "Quality-conscious construction approach",
-                "Responsive project communication",
-              ].map((i) => (
-                <div key={i} className="flex items-center gap-2.5 rounded-xl border border-border bg-background px-4 py-3 text-[15px] font-medium text-foreground/85">
-                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gold/20 text-gold-text">
-                    <ShieldCheck className="h-3 w-3" />
+                { t: "Transparent, itemised estimates", Icon: FileText },
+                { t: "Practical planning before execution", Icon: ClipboardCheck },
+                { t: "Quality-conscious construction approach", Icon: BadgeCheck },
+                { t: "Responsive project communication", Icon: Headset },
+              ].map(({ t, Icon }) => (
+                <div key={t} className="flex items-center gap-2.5 rounded-xl border border-border bg-background px-4 py-3 text-[15px] font-medium text-foreground/85">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold/20 text-gold-text">
+                    <Icon className="h-4 w-4" />
                   </span>
-                  {i}
+                  {t}
                 </div>
               ))}
             </div>
@@ -354,7 +374,7 @@ function Home_() {
             </div>
             <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
               {testimonials.map((t, idx) => (
-                <figure key={idx} className="card-base flex h-full flex-col p-7 sm:p-8">
+                <figure key={idx} className="card-base no-lift flex h-full flex-col p-7 sm:p-8">
                   <div className="flex gap-1 text-gold">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star key={i} className="h-4 w-4 fill-current" />
@@ -412,12 +432,16 @@ function Home_() {
               Tell us about your construction or design requirements. Our team will connect with you to discuss your project.
             </p>
             <ul className="mt-6 space-y-3 text-base">
-              {["No-obligation estimate", "Site visit on request", "Itemised, rate-wise pricing"].map((i) => (
-                <li key={i} className="flex gap-2 items-center text-foreground/85">
-                  <span className="grid h-5 w-5 place-items-center rounded-full bg-gold/20 text-gold-text">
-                    <PaintBucket className="h-3 w-3" />
+              {[
+                { t: "No-obligation estimate", Icon: BadgeCheck },
+                { t: "Site visit on request", Icon: MapPinned },
+                { t: "Itemised, rate-wise pricing", Icon: Calculator },
+              ].map(({ t, Icon }) => (
+                <li key={t} className="flex gap-3 items-center text-foreground/85">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold/20 text-gold-text">
+                    <Icon className="h-4 w-4" />
                   </span>
-                  {i}
+                  {t}
                 </li>
               ))}
             </ul>
@@ -429,7 +453,7 @@ function Home_() {
               </p>
               <div className="mt-4">
                 <a href={waHref()} target="_blank" rel="noreferrer" className="btn-whatsapp text-sm inline-flex">
-                  <MessageCircle className="h-4 w-4" /> WhatsApp Us
+                  <WhatsAppIcon className="h-4 w-4" /> WhatsApp Us
                 </a>
               </div>
             </div>

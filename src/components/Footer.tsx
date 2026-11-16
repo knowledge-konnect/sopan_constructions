@@ -1,6 +1,7 @@
 import { mailHref, phoneHref, site, waHref } from "@/lib/site";
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 
 export function Footer() {
   return (
@@ -64,7 +65,7 @@ export function Footer() {
               <a href={mailHref()} className="break-all hover:text-gold transition-colors">{site.email}</a>
             </li>
             <li className="flex gap-3">
-              <MessageCircle className="h-4 w-4 mt-0.5 shrink-0 text-gold" />
+              <WhatsAppIcon className="h-4 w-4 mt-0.5 shrink-0 text-gold" />
               <a href={waHref()} target="_blank" rel="noreferrer" className="hover:text-gold transition-colors">
                 WhatsApp us
               </a>
@@ -77,7 +78,10 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-x py-5 lg:pb-16 flex flex-col sm:flex-row gap-3 items-center justify-between text-sm text-white/65">
           <p>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</p>
-          <p>Construction and design solutions.</p>
+          <p className="flex items-center gap-4">
+            <Link to="/privacy" className="hover:text-gold transition-colors">Privacy Policy</Link>
+            <span>Construction and design solutions.</span>
+          </p>
         </div>
       </div>
     </footer>
