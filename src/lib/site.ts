@@ -1,6 +1,8 @@
 export const site = {
   name: "SOPAN Constructions and Infra Developers",
   legalName: "SOPAN Constructions and Infra Developers",
+  // Optional: fill in to sign the "message from our team" on the About page, e.g. { name: "Full Name", role: "Founder" }
+  owner: { name: "", role: "" },
   tagline: "YOUR DREAMS. OUR COMMITMENT.",
   phone: "+91 77803 87486",
   phoneTel: "+917780387486",
@@ -21,7 +23,7 @@ export const navigationItems = [
   { label: "About", to: "/about", sectionId: "about" },
   { label: "Services", to: "/services", sectionId: "services" },
   { label: "Projects", to: "/projects", sectionId: "projects" },
-  { label: "Why Us", to: "/#why-us", sectionId: "why-us" },
+  { label: "Why Us", to: "/", hash: "why-us", sectionId: "why-us" },
   { label: "Contact", to: "/contact", sectionId: "contact" },
 ] as const;
 

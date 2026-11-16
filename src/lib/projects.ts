@@ -7,7 +7,7 @@ export type Project = {
   slug: string;
   name: string;
   location: string;
-  type: "Residential" | "Apartment" | "Renovation";
+  type: "Residential" | "Apartment" | "Commercial" | "Renovation";
   status: "Reference";
   year: string;
   area: string;

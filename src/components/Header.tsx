@@ -1,6 +1,6 @@
-import { navigationItems } from "@/lib/site";
+import { navigationItems, phoneHref, site } from "@/lib/site";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function Header() {
@@ -8,6 +8,17 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const location = useLocation();
+
+  // Close the mobile menu on navigation or Escape
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname, location.hash]);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -28,34 +39,36 @@ export function Header() {
   }, []);
 
   const isItemActive = (to: string, sectionId?: string) => {
-    const normalizedTo = to.replace(/\?.*$/, "");
     const isHomeRoute = location.pathname === "/";
-    const hasHashTarget = !!location.hash;
-    const matchesPath = normalizedTo !== "/" && normalizedTo === location.pathname;
-    const matchesHash = sectionId ? location.hash === `#${sectionId}` : false;
-    const homeFallbackActive = isHomeRoute && !hasHashTarget && (sectionId === "home" ? !activeSection || activeSection === "home" : sectionId === activeSection);
-
-    return matchesPath || matchesHash || homeFallbackActive;
+    // On the home page the highlight follows scroll position (a leftover #hash must not stick).
+    if (isHomeRoute) {
+      return sectionId === "home" ? !activeSection || activeSection === "home" : sectionId === activeSection;
+    }
+    return to !== "/" && to === location.pathname;
   };
 
   return (
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ${scrolled
-        ? "bg-background border-b border-border/80 shadow-[0_1px_0_color-mix(in_oklab,var(--color-primary)_5%,transparent)]"
+        ? "bg-background border-b border-border shadow-[0_10px_24px_-18px_rgba(15,45,92,0.55)]"
         : "bg-background border-b border-transparent"
         }`}
     >
       <div
         className="container-x flex items-center gap-4 h-16 sm:h-[66px] lg:h-[78px]"
       >
-        <img
-          src="/sopan-logo.svg"
-          alt="Sopan Constructions"
-          className="block w-[138px] sm:w-[148px] lg:w-[188px] xl:w-[196px] h-auto object-contain shrink-0"
-        />
+        <Link to="/" aria-label="Sopan Constructions home" className="shrink-0">
+          <img
+            src="/sopan-logo.svg"
+            alt="SOPAN Constructions and Infra Developers"
+            width={2200}
+            height={900}
+            className="block w-[124px] sm:w-[136px] lg:w-[168px] xl:w-[184px] h-auto object-contain"
+          />
+        </Link>
 
-        <div className="hidden lg:ml-auto lg:flex items-center gap-5">
-          <nav className="flex items-center gap-1 overflow-hidden">
+        <div className="hidden lg:ml-auto lg:flex items-center gap-3 xl:gap-4">
+          <nav className="flex items-center gap-0.5 xl:gap-1">
             {navigationItems.map((item) => {
               const active = isItemActive(item.to, item.sectionId);
 
@@ -63,17 +76,24 @@ export function Header() {
                 <Link
                   key={item.label}
                   to={item.to}
+                  hash={"hash" in item ? item.hash : undefined}
                   aria-current={active ? "page" : undefined}
-                  className={`relative rounded-xl px-3.5 py-2.5 text-[13px] lg:text-[14px] font-medium tracking-[0.01em] transition-all duration-200 ${active ? "bg-gold text-primary shadow-[0_8px_20px_-12px_rgba(212,160,23,0.8)] ring-1 ring-gold/80" : "text-foreground/70 hover:text-primary hover:bg-primary/5"}`}
+                  className={`relative rounded-xl px-3 xl:px-3.5 py-2.5 text-[13px] xl:text-[14px] font-medium tracking-[0.01em] transition-all duration-200 ${active ? "bg-gold text-primary shadow-[0_8px_20px_-12px_rgba(212,160,23,0.8)] ring-1 ring-gold/80" : "text-foreground/70 hover:text-primary hover:bg-primary/5"}`}
                 >
                   {item.label}
-                  <span
-                    className={`pointer-events-none absolute left-1/2 -bottom-[2px] h-[2px] -translate-x-1/2 rounded-full bg-primary transition-all duration-300 ${active ? "w-5 opacity-100" : "w-0 opacity-0"}`}
-                  />
                 </Link>
               );
             })}
           </nav>
+
+          <a
+            href={phoneHref}
+            aria-label={`Call us on ${site.phone}`}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/25 px-3 py-2.5 text-primary transition-colors hover:bg-primary/5 xl:px-4"
+          >
+            <Phone className="h-4 w-4" />
+            <span className="hidden text-[14px] font-semibold xl:inline">{site.phone}</span>
+          </a>
 
           <Link
             to="/quote"
@@ -86,6 +106,8 @@ export function Header() {
 
         <button
           aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="mobile-menu"
           className="lg:hidden grid h-11 w-11 place-items-center rounded-full text-primary hover:bg-surface transition-colors"
           onClick={() => setOpen((v) => !v)}
         >
@@ -94,7 +116,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200">
+        <div id="mobile-menu" className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="container-x py-5 flex flex-col gap-1">
             {navigationItems.map((item) => {
               const active = isItemActive(item.to, item.sectionId);
@@ -103,6 +125,7 @@ export function Header() {
                 <Link
                   key={item.label}
                   to={item.to}
+                  hash={"hash" in item ? item.hash : undefined}
                   onClick={() => setOpen(false)}
                   aria-current={active ? "page" : undefined}
                   className={`py-3 px-3 rounded-xl text-sm font-medium transition-colors ${active ? "bg-gold text-primary font-semibold shadow-[0_8px_20px_-12px_rgba(212,160,23,0.8)] ring-1 ring-gold/80" : "text-foreground/85 hover:bg-surface"}`}
