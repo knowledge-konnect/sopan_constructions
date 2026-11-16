@@ -21,7 +21,7 @@ import {
   PaintRoller,
   PencilRuler,
   Ruler,
-  Store,
+  Wrench
 } from "lucide-react";
 
 export const Route = createFileRoute("/services")({
@@ -38,52 +38,7 @@ export const Route = createFileRoute("/services")({
   component: Services,
 });
 
-type Group = { id: string; icon: typeof Ruler; title: string; points: string[] };
-type Service = {
-  id: string;
-  icon: typeof Home;
-  title: string;
-  desc: string;
-  benefits: string[];
-  quoteValue: string;
-  items?: string[];
-  groups?: Group[];
-};
-
-const services: Service[] = [
-  {
-    id: "planning-design",
-    icon: PencilRuler,
-    title: "Planning & Design",
-    desc: "Turn your ideas into a well-planned home with comprehensive architectural and technical design solutions. From 2D layouts and 3D visualisation to structural drawings and exterior elevations, we help you plan before construction begins.",
-    benefits: [
-      "Better space utilisation",
-      "Clear visualisation before construction",
-      "Detailed technical documentation",
-      "Better coordination between design and execution",
-    ],
-    groups: [
-      {
-        id: "architectural-planning",
-        icon: Ruler,
-        title: "Architectural Planning & 2D/3D Floor Plans",
-        points: ["Independent house planning", "Apartment planning", "2D floor plans", "3D floor plans", "Space planning and room layouts"],
-      },
-      {
-        id: "structural-design",
-        icon: Layers,
-        title: "Structural Designs & Working Drawings",
-        points: ["Structural designs", "Foundation details", "Column and beam details", "Slab and reinforcement drawings", "Construction working drawings"],
-      },
-      {
-        id: "elevations-visualization",
-        icon: Compass,
-        title: "3D Elevations & Architectural Visualization",
-        points: ["3D front elevations", "Exterior architectural views", "Colour and material visualisation", "Elevation drawings"],
-      },
-    ],
-    quoteValue: "Planning & Design",
-  },
+const services = [
   {
     id: "residential",
     icon: Home,
@@ -134,28 +89,46 @@ const services: Service[] = [
   },
 ];
 
-const guide = [
-  { situation: "I have a plot but no plan yet", answer: "Planning & Design", href: "#planning-design", icon: LandPlot },
-  { situation: "I have approved plans and want to build", answer: "Residential, Apartment or Commercial Construction", href: "#residential", icon: ClipboardCheck },
-  { situation: "I want to upgrade an existing home", answer: "Renovation & Remodeling", href: "#renovation", icon: PaintRoller },
+const planningSubcategories = [
+  {
+    id: "architectural-planning",
+    icon: Ruler,
+    title: "Architectural Planning & 2D/3D Floor Plans",
+    desc: "Plan practical layouts and room flow before construction with clear 2D and 3D floor planning support.",
+    points: [
+      "Independent house planning",
+      "Apartment planning",
+      "2D floor plans",
+      "3D floor plans",
+      "Space planning and room layouts",
+    ],
+  },
+  {
+    id: "structural-design",
+    icon: Layers,
+    title: "Structural Designs & Working Drawings",
+    desc: "Prepare technical design inputs and working-level drawings to coordinate execution with clarity.",
+    points: [
+      "Structural designs",
+      "Foundation details",
+      "Column and beam details",
+      "Slab and reinforcement drawings",
+      "Construction working drawings",
+    ],
+  },
+  {
+    id: "elevations-visualization",
+    icon: Compass,
+    title: "3D Elevations & Architectural Visualization",
+    desc: "Review exterior style, proportions and material direction before final execution.",
+    points: [
+      "3D front elevations",
+      "Exterior architectural views",
+      "Colour and material visualisation",
+      "Elevation drawings",
+    ],
+  },
 ];
-
-const steps = [
-  { icon: MessagesSquare, title: "Project Discussion", text: "Share your requirements, plot details and budget." },
-  { icon: MapPinned, title: "Site & Requirements Review", text: "We review the site and confirm the scope of work." },
-  { icon: Calculator, title: "Planning & Estimate", text: "You receive a clear plan and an itemised estimate." },
-  { icon: HardHat, title: "Construction", text: "Work proceeds with regular updates." },
-  { icon: KeyRound, title: "Handover", text: "Final walkthrough and handover." },
-];
-
-function Dot() {
-  return (
-    // wrapper is exactly one line tall, so the dot centres on the first line of text
-    <span aria-hidden className="flex h-[1lh] shrink-0 items-center">
-      <span className="block h-1.5 w-1.5 rounded-full bg-gold" />
-    </span>
-  );
-}
 
 function Services() {
   const [active, setActive] = useState(services[0].id);
@@ -181,48 +154,8 @@ function Services() {
           <span className="eyebrow">Our Services</span>
           <h1 className="heading-xl mt-3 text-white max-w-3xl">Construction and design services</h1>
           <p className="mt-5 text-white/80 max-w-2xl">
-            SOPAN Constructions and Infra Developers provides planning & design, residential, apartment and commercial construction, and renovation services.
+            SOPAN Constructions and Infra Developers provides residential construction, apartment construction, planning & design, and renovation services.
           </p>
-          <div className="mt-7 flex flex-wrap gap-2.5">
-            {services.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                className="inline-flex items-center rounded-full border border-white/25 px-4 py-1.5 text-sm font-medium text-white/90 transition-colors hover:bg-white/10 hover:text-white"
-              >
-                {s.title}
-              </a>
-            ))}
-          </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/quote" className="btn-primary">
-              Get a Free Quote <ArrowRight className="h-4 w-4" />
-            </Link>
-            <a href={waHref()} target="_blank" rel="noreferrer" className="btn-whatsapp">
-              <WhatsAppIcon className="h-4 w-4" /> WhatsApp us
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section className="pt-12 sm:pt-16">
-        <div className="container-x">
-          <h2 className="font-display text-xl font-bold text-primary">Not sure where to start?</h2>
-          <div className="mt-5 grid gap-4 md:grid-cols-3">
-            {guide.map((g) => (
-              <a key={g.situation} href={g.href} className="card-base group flex items-start gap-4 p-5">
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-gold/15 text-gold-text">
-                  <g.icon className="h-5 w-5" />
-                </span>
-                <span className="block">
-                  <span className="block text-sm text-muted-foreground">{g.situation}</span>
-                  <span className="mt-1.5 flex items-center gap-2 font-display font-semibold text-primary group-hover:text-gold-text transition-colors">
-                    {g.answer} <ArrowRight className="h-4 w-4 shrink-0" />
-                  </span>
-                </span>
-              </a>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -247,66 +180,49 @@ function Services() {
             </nav>
           </aside>
           <div className="space-y-12">
-          {services.map((s, i) => (
-            <article key={s.id} id={s.id} className="grid xl:grid-cols-[1fr_1.4fr] gap-8 card-base no-lift p-6 sm:p-10">
-              <div>
-                <div className="grid h-14 w-14 place-items-center rounded-md bg-primary text-gold">
-                  <s.icon className="h-7 w-7" />
+            {services.map((s, i) => (
+              <article key={s.id} id={s.id} className="grid xl:grid-cols-[1fr_1.4fr] gap-8 card-base no-lift p-6 sm:p-10">
+                <div>
+                  <div className="grid h-14 w-14 place-items-center rounded-md bg-primary text-gold">
+                    <s.icon className="h-7 w-7" />
+                  </div>
+                  <h2 className="mt-4 font-display text-2xl font-bold text-primary">{s.title}</h2>
+                  <p className="mt-3 text-muted-foreground leading-relaxed">{s.desc}</p>
+                  <Link to="/quote" search={{ service: s.quoteValue }} className="btn-primary mt-6 text-sm">
+                    Get a Quote for This Service <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </div>
-                <h2 className="mt-4 font-display text-2xl font-bold text-primary">{s.title}</h2>
-                <p className="mt-3 text-muted-foreground leading-relaxed">{s.desc}</p>
-                <Link to="/quote" search={{ service: s.quoteValue }} className="btn-primary mt-6 text-sm">
-                  Get a Quote for This Service <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
 
-              <div className={`grid sm:grid-cols-2 gap-5 ${s.groups ? "" : "sm:items-start"}`}>
-                {s.items && (
+                <div className="grid sm:grid-cols-2 gap-5">
                   <div className="rounded-md border border-border bg-surface p-5">
-                    <h4 className="font-display font-semibold text-primary">What&apos;s included</h4>
+                    <h4 className="font-display font-semibold text-primary">Benefits</h4>
                     <ul className="mt-3 space-y-2">
-                      {s.items.map((it) => (
-                        <li key={it} className="flex gap-2.5 items-start text-[15px] leading-relaxed text-foreground/85">
-                          <Dot />
-                          <span>{it}</span>
+                      {s.benefits.map((b) => (
+                        <li key={b} className="flex gap-2 text-sm text-foreground/85">
+                          <Check className="h-4 w-4 text-gold mt-0.5 shrink-0" /> {b}
                         </li>
                       ))}
                     </ul>
                   </div>
-                )}
-                <div className="rounded-md border border-border bg-surface p-5">
-                  <h4 className="font-display font-semibold text-primary">Benefits</h4>
-                  <ul className="mt-3 space-y-2">
-                    {s.benefits.map((b) => (
-                      <li key={b} className="flex gap-2 text-[15px] leading-relaxed text-foreground/85">
-                        <Check className="h-4 w-4 text-gold-text mt-0.5 shrink-0" /> {b}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="rounded-md border border-border bg-surface p-5">
+                    <h4 className="font-display font-semibold text-primary">Our Process</h4>
+                    <ol className="mt-3 space-y-2">
+                      {s.process.map((p, idx) => (
+                        <li key={p} className="flex gap-3 text-sm text-foreground/85">
+                          <span className="grid h-5 w-5 place-items-center rounded-full bg-primary text-gold text-[10px] font-bold shrink-0">
+                            {idx + 1}
+                          </span>
+                          {p}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
                 </div>
-                {s.groups?.map((g) => (
-                  <div key={g.id} className="rounded-md border border-border bg-surface p-5">
-                    <div className="flex items-start gap-3">
-                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-primary text-gold">
-                        <g.icon className="h-4 w-4" />
-                      </span>
-                      <h4 className="font-display font-semibold text-primary leading-snug">{g.title}</h4>
-                    </div>
-                    <ul className="mt-3 space-y-2">
-                      {g.points.map((p) => (
-                        <li key={p} className="flex gap-2 text-[15px] leading-relaxed text-foreground/85">
-                          <Check className="h-4 w-4 text-gold-text mt-0.5 shrink-0" /> {p}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-              <div className="xl:col-span-2 text-[11px] text-muted-foreground">
-                Service {String(i + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}
-              </div>
-            </article>
-          ))}
+                <div className="xl:col-span-2 text-[11px] text-muted-foreground">
+                  Service {String(i + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -317,16 +233,24 @@ function Services() {
             <span className="eyebrow">How we work</span>
             <h2 className="heading-lg mt-2 text-primary">A clear process from first discussion to handover</h2>
           </div>
-          <ol className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-            {steps.map((st, idx) => (
-              <li key={st.title} className="card-base no-lift p-5">
-                <div className="flex items-center justify-between">
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-gold text-sm font-bold">{idx + 1}</span>
-                  <st.icon className="h-5 w-5 text-gold-text" aria-hidden />
+
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {planningSubcategories.map((sub) => (
+              <article key={sub.id} className="card-base p-6">
+                <div className="grid h-11 w-11 place-items-center rounded-md bg-primary text-gold">
+                  <sub.icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-3 font-display font-semibold text-primary">{st.title}</h3>
-                <p className="mt-1.5 text-[15px] text-muted-foreground leading-relaxed">{st.text}</p>
-              </li>
+                <h3 className="mt-4 font-display text-lg font-semibold text-primary">{sub.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{sub.desc}</p>
+                <ul className="mt-4 space-y-1.5">
+                  {sub.points.map((point) => (
+                    <li key={point} className="flex gap-2 items-start text-sm text-foreground/85">
+                      <Check className="h-4 w-4 text-gold mt-0.5 shrink-0" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </article>
             ))}
           </ol>
           <p className="mt-6 text-sm text-muted-foreground">

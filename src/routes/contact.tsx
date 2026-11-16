@@ -45,7 +45,11 @@ function Contact() {
                 </span>
                 <div>
                   <h3 className="font-display font-semibold text-primary">Office Address</h3>
+<<<<<<< HEAD
                   <p className="mt-1 text-[15px] text-muted-foreground">{fullAddress}</p>
+=======
+                  <p className="mt-1 text-sm text-muted-foreground">{fullAddress}</p>
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
                   <a href={mapsDirections} target="_blank" rel="noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-gold-text">
                     Get directions →
                   </a>
@@ -111,7 +115,11 @@ function Contact() {
       <section className="pb-16 sm:pb-24">
         <div className="container-x">
           <h2 className="heading-lg text-primary">Find our office</h2>
+<<<<<<< HEAD
           <div className="card-base no-lift mt-6 overflow-hidden">
+=======
+          <div className="card-base mt-6 overflow-hidden">
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
             <iframe
               title="SOPAN Constructions office location"
               src={mapsEmbed}

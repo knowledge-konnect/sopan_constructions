@@ -1,6 +1,10 @@
 import { Link } from "@tanstack/react-router";
+<<<<<<< HEAD
 import { ArrowRight, Phone } from "lucide-react";
 import { WhatsAppIcon } from "./WhatsAppIcon";
+=======
+import { ArrowRight } from "lucide-react";
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
 import { phoneHref, waHref } from "@/lib/site";
 
 export function CallbackBar({ showContact = false, topGap = false }: { showContact?: boolean; topGap?: boolean }) {
@@ -23,8 +27,13 @@ export function CallbackBar({ showContact = false, topGap = false }: { showConta
               </Link>
               {showContact && (
                 <>
+<<<<<<< HEAD
                   <a href={phoneHref} className="btn-outline-light"><Phone className="h-4 w-4" /> Call us</a>
                   <a href={waHref()} target="_blank" rel="noreferrer" className="btn-whatsapp"><WhatsAppIcon className="h-4 w-4" /> WhatsApp</a>
+=======
+                  <a href={phoneHref} className="btn-outline-light">Call us</a>
+                  <a href={waHref()} target="_blank" rel="noreferrer" className="btn-whatsapp">WhatsApp</a>
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
                 </>
               )}
             </div>

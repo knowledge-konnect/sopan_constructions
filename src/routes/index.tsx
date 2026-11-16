@@ -14,22 +14,38 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import {
   ArrowRight,
+<<<<<<< HEAD
   BadgeCheck,
+=======
+  Layers,
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
   Building2,
   Calculator,
   Calendar,
+<<<<<<< HEAD
   ClipboardCheck,
   FileText,
+=======
+  Hammer,
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
   HardHat,
   Headset,
   HelpCircle,
   Home,
   Layers,
   MapPin,
+<<<<<<< HEAD
   MapPinned,
   MessageSquare,
   PaintRoller,
   PencilRuler,
+=======
+  MessageCircle,
+  MessageSquare,
+  PencilRuler,
+  Store,
+  PaintBucket,
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
   Ruler,
   ShieldCheck,
   Sparkles,
@@ -85,7 +101,11 @@ const services = [
   { id: "residential", icon: Home, title: "Residential Construction", desc: "Independent houses and villas built to approved drawings with supervised civil work and practical detailing." },
   { id: "apartment", icon: Building2, title: "Apartment Construction", desc: "Multi-storey residential developments planned for structure, services and long-term practicality." },
   { id: "commercial", icon: Store, title: "Commercial Construction", desc: "Shops, offices and commercial buildings planned for practical layouts, durability and efficient use of space." },
+<<<<<<< HEAD
   { id: "renovation", icon: PaintRoller, title: "Renovation & Remodeling", desc: "Upgrades, structural repairs and layout improvements to refresh and modernise existing homes." },
+=======
+  { id: "renovation", icon: Hammer, title: "Renovation & Remodeling", desc: "Upgrades, structural repairs and layout improvements to refresh and modernise existing homes." },
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
 ];
 
 function Home_() {
@@ -105,7 +125,11 @@ function Home_() {
 
         <div className="container-x relative py-20 sm:py-32 lg:py-40 text-white">
           <span className="eyebrow">
+<<<<<<< HEAD
             <HardHat className="h-3.5 w-3.5" /> Construction and design support
+=======
+            <MapPin className="h-3.5 w-3.5" /> Construction and design support
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
           </span>
           <h1 className="heading-xl mt-5 max-w-3xl text-white fade-up">
             Your Dream Home. Our Commitment. Quality in Every Step.
@@ -262,6 +286,7 @@ function Home_() {
             </p>
             <div className="mt-8 grid sm:grid-cols-2 gap-3">
               {[
+<<<<<<< HEAD
                 { t: "Transparent, itemised estimates", Icon: FileText },
                 { t: "Practical planning before execution", Icon: ClipboardCheck },
                 { t: "Quality-conscious construction approach", Icon: BadgeCheck },
@@ -270,6 +295,16 @@ function Home_() {
                 <div key={t} className="flex items-center gap-2.5 rounded-xl border border-border bg-background px-4 py-3 text-[15px] font-medium text-foreground/85">
                   <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold/20 text-gold-text">
                     <Icon className="h-4 w-4" />
+=======
+                "Transparent, itemised estimates",
+                "Practical planning before execution",
+                "Quality-conscious construction approach",
+                "Responsive project communication",
+              ].map((i) => (
+                <div key={i} className="flex items-center gap-2.5 rounded-xl border border-border bg-background px-4 py-3 text-[15px] font-medium text-foreground/85">
+                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gold/20 text-gold-text">
+                    <ShieldCheck className="h-3 w-3" />
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
                   </span>
                   {t}
                 </div>
@@ -432,6 +467,7 @@ function Home_() {
               Tell us about your construction or design requirements. Our team will connect with you to discuss your project.
             </p>
             <ul className="mt-6 space-y-3 text-base">
+<<<<<<< HEAD
               {[
                 { t: "No-obligation estimate", Icon: BadgeCheck },
                 { t: "Site visit on request", Icon: MapPinned },
@@ -440,6 +476,12 @@ function Home_() {
                 <li key={t} className="flex gap-3 items-center text-foreground/85">
                   <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold/20 text-gold-text">
                     <Icon className="h-4 w-4" />
+=======
+              {["No-obligation estimate", "Site visit on request", "Itemised, rate-wise pricing"].map((i) => (
+                <li key={i} className="flex gap-2 items-center text-foreground/85">
+                  <span className="grid h-5 w-5 place-items-center rounded-full bg-gold/20 text-gold-text">
+                    <PaintBucket className="h-3 w-3" />
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
                   </span>
                   {t}
                 </li>

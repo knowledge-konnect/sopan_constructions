@@ -67,7 +67,11 @@ export function Header() {
           />
         </Link>
 
+<<<<<<< HEAD
         <div className="hidden lg:ml-auto lg:flex items-center gap-3 xl:gap-4">
+=======
+        <div className="hidden lg:ml-auto lg:flex items-center gap-5">
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
           <nav className="flex items-center gap-0.5 xl:gap-1">
             {navigationItems.map((item) => {
               const active = isItemActive(item.to, item.sectionId);

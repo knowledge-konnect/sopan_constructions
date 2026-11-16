@@ -78,10 +78,14 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-x py-5 lg:pb-16 flex flex-col sm:flex-row gap-3 items-center justify-between text-sm text-white/65">
           <p>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</p>
+<<<<<<< HEAD
           <p className="flex items-center gap-4">
             <Link to="/privacy" className="hover:text-gold transition-colors">Privacy Policy</Link>
             <span>Construction and design solutions.</span>
           </p>
+=======
+          <p>Construction and design solutions.</p>
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
         </div>
       </div>
     </footer>

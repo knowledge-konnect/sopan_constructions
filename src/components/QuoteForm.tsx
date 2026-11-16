@@ -181,7 +181,11 @@ export function QuoteForm({ variant = "full", className = "", defaultService = "
 
   if (status === "success") {
     return (
+<<<<<<< HEAD
       <div className={`card-base no-lift p-8 text-center ${className}`} role="status" aria-live="polite">
+=======
+      <div className={`card-base p-8 text-center ${className}`} role="status" aria-live="polite">
+>>>>>>> 50aecc9d6cd70e2d7d2555a0a0eb79c2a1308316
         <CheckCircle2 className="h-12 w-12 text-gold-text mx-auto" />
         <h3 className="heading-lg mt-3 text-primary">Almost done!</h3>
         <p className="mt-2 text-base text-muted-foreground leading-relaxed">
